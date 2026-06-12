@@ -1,11 +1,12 @@
 import { Navbar } from "@/components/navbar";
 import React from "react";
 import Footer from "@/components/footer";
-import { SearchFilters } from "./search-filters/page";
+import { SearchFilters } from "./search-filters";
 
 import configPromise from "@payload-config";
 import { getPayload } from "payload";
 import { Category } from "@/payload-types";
+import { CustommCategory } from "./types";
 
 export default async function HomeLayout({ children }: { children: React.ReactNode }) {
   const payload = await getPayload({ config: configPromise });
@@ -15,9 +16,10 @@ export default async function HomeLayout({ children }: { children: React.ReactNo
     depth: 1,
     where: { parent: { exists: false } },
     pagination: false,
+    sort: "name",
   });
 
-  const formattedData = data.docs.map((doc) => ({
+  const formattedData: CustommCategory[] = data.docs.map((doc) => ({
     ...doc,
     subcategories: (doc.subcategories?.docs || []).map((doc) => ({
       ...(doc as Category),

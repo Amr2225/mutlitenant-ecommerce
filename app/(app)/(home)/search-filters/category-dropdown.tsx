@@ -1,13 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Category } from "@/payload-types";
 import React, { useRef, useState } from "react";
 import { useDropdownPosition } from "./use-dropdown-position";
 import { SubcategoryMenu } from "./subcategory-menu";
+import { CustommCategory } from "../types";
+import Link from "next/link";
 
 interface Props {
-  category: Category;
+  category: CustommCategory;
   isActive?: boolean;
   isNavigationHovered?: boolean;
 }
@@ -26,6 +27,18 @@ export const CategoryDropdown = ({ category, isActive, isNavigationHovered }: Pr
     setIsOpen(false);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      if (category.subcategories?.length) {
+        e.preventDefault();
+        setIsOpen(!isOpen);
+      }
+    } else if (e.key === "Escape" && isOpen) {
+      e.preventDefault();
+      setIsOpen(false);
+    }
+  };
+
   const dropdownPosition = getDropdownPosition();
 
   return (
@@ -34,16 +47,22 @@ export const CategoryDropdown = ({ category, isActive, isNavigationHovered }: Pr
       ref={dropdownRef}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      onKeyDown={handleKeyDown}
     >
       <div className='relative'>
         <Button
           variant='elevated'
+          aria-expanded={isOpen}
+          aria-haspopup='true'
           className={cn(
             "h-11 px-4 bg-transparent border-transparent rounded-full text-black hover:bg-white hover:border-primary",
             isActive && !isNavigationHovered && "bg-white border-primary",
+            isOpen && "bg-white border-primary shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] -translate-1",
           )}
         >
-          {category.name}
+          <Link href={`${category.slug === "all" ? "/" : category.slug}`} prefetch>
+            {category.name}
+          </Link>
         </Button>
         {category.subcategories && category.subcategories?.length > 0 && (
           <div

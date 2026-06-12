@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "generate:types": "bun --experimental-strip-types --no-require-module ./script/generate.js"
+    "generate:types": "bun --experimental-strip-types --no-require-module ./script/generate.js",
+    "db:fresh": "payload migrate:fresh"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",

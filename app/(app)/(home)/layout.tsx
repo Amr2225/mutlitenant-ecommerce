@@ -1,11 +1,34 @@
 import { Navbar } from "@/components/navbar";
 import React from "react";
 import Footer from "@/components/footer";
+import { SearchFilters } from "./search-filters/page";
 
-export default function HomeLayout({ children }: { children: React.ReactNode }) {
+import configPromise from "@payload-config";
+import { getPayload } from "payload";
+import { Category } from "@/payload-types";
+
+export default async function HomeLayout({ children }: { children: React.ReactNode }) {
+  const payload = await getPayload({ config: configPromise });
+
+  const data = await payload.find({
+    collection: "categories",
+    depth: 1,
+    where: { parent: { exists: false } },
+    pagination: false,
+  });
+
+  const formattedData = data.docs.map((doc) => ({
+    ...doc,
+    subcategories: (doc.subcategories?.docs || []).map((doc) => ({
+      ...(doc as Category),
+      subcategories: undefined,
+    })),
+  }));
+
   return (
     <div className='flex flex-col min-h-screen'>
       <Navbar />
+      <SearchFilters data={formattedData} />
       <div className='flex-1 bg-[#f4f4f0]'>{children}</div>
       <Footer />
     </div>

@@ -1,14 +1,14 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { ListFilterIcon, SearchIcon } from "lucide-react";
-import { CustommCategory } from "../types";
+import { CustomCategory } from "../../../../modules/categories/types";
 import { CategoriesSidebar } from "./categories-sidebar";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 interface Props {
   disabled?: boolean;
-  data: CustommCategory[];
+  data: CustomCategory[];
 }
 export const SearchInput = ({ disabled, data }: Props) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

@@ -1,6 +1,6 @@
 import { Category } from "@/payload-types";
 import Link from "next/link";
-import { CustommCategory } from "../types";
+import { CustommCategory } from "../../../../modules/categories/types";
 
 interface Props {
   category: CustommCategory;

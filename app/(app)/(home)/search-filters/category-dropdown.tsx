@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import React, { useRef, useState } from "react";
 import { useDropdownPosition } from "./use-dropdown-position";
 import { SubcategoryMenu } from "./subcategory-menu";
-import { CustommCategory } from "../types";
+import { CustommCategory } from "../../../../modules/categories/types";
 import Link from "next/link";
 
 interface Props {

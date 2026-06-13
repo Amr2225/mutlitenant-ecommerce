@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -15,6 +11,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "noUnusedLocals": true,
     "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
@@ -23,12 +20,9 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ],
-      "@payload-config": [
-        "./payload.config.ts"
-      ]
+      "@/*": ["./*"],
+      "@payload-config": ["./payload.config.ts"],
+      "@/trpc/*": ["./trpc/*"]
     }
   },
   "include": [
@@ -39,7 +33,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

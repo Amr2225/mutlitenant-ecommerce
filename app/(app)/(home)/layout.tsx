@@ -3,34 +3,21 @@ import React from "react";
 import Footer from "@/components/footer";
 import { SearchFilters } from "./search-filters";
 
-import configPromise from "@payload-config";
-import { getPayload } from "payload";
-import { Category } from "@/payload-types";
-import { CustommCategory } from "./types";
+import { caller } from "@/trpc/server";
 
 export default async function HomeLayout({ children }: { children: React.ReactNode }) {
-  const payload = await getPayload({ config: configPromise });
-
-  const data = await payload.find({
-    collection: "categories",
-    depth: 1,
-    where: { parent: { exists: false } },
-    pagination: false,
-    sort: "name",
-  });
-
-  const formattedData: CustommCategory[] = data.docs.map((doc) => ({
-    ...doc,
-    subcategories: (doc.subcategories?.docs || []).map((doc) => ({
-      ...(doc as Category),
-      subcategories: undefined,
-    })),
-  }));
+  // const queryClient = getQueryClient();
+  // void prefetchCategories();
+  const data = await caller.categories.getMany();
 
   return (
     <div className='flex flex-col min-h-screen'>
       <Navbar />
-      <SearchFilters data={formattedData} />
+      <SearchFilters data={data} />
+      {/* <HydrateClient>
+        <Suspense fallback={<div>Loading...</div>}>
+        </Suspense>
+      </HydrateClient> */}
       <div className='flex-1 bg-[#f4f4f0]'>{children}</div>
       <Footer />
     </div>

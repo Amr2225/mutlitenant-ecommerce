@@ -3,6 +3,8 @@ import { DM_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 
+import { TRPCReactProvider } from "@/trpc/client";
+
 const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-dm-sans",
@@ -20,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' className={cn("antialiased", dmSans.className)}>
-      <body className='min-h-full flex flex-col'>{children}</body>
+      <body className='min-h-full flex flex-col'>
+        <TRPCReactProvider>{children}</TRPCReactProvider>
+      </body>
     </html>
   );
 }

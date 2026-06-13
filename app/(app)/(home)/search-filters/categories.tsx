@@ -1,6 +1,6 @@
 "use client";
 import { CategoryDropdown } from "./category-dropdown";
-import { CustommCategory } from "../types";
+import { CustomCategory } from "../../../../modules/categories/types";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -8,7 +8,7 @@ import { ListFilterIcon } from "lucide-react";
 import { CategoriesSidebar } from "./categories-sidebar";
 
 interface CategoriesProps {
-  data: CustommCategory[];
+  data: CustomCategory[];
 }
 export const Categories = ({ data }: CategoriesProps) => {
   const containerRef = useRef<HTMLDivElement>(null);

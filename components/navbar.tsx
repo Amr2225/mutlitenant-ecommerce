@@ -28,7 +28,7 @@ export const Navbar = () => {
 
   return (
     <nav className='h-20 flex border-b justify-between font-medium bg-white'>
-      <Link href='/' className='pl-6 flex items-center'>
+      <Link prefetch href='/' className='pl-6 flex items-center'>
         <span className={cn("text-5xl font-semibold", poppins.className)}>funroad</span>
       </Link>
 
@@ -48,7 +48,9 @@ export const Navbar = () => {
           variant='secondary'
           className='border-l border-t-0 border-b-0 border-r-0 px-12 h-full rounded-none bg-white hover:bg-pink-400 transition-colors text-lg'
         >
-          <Link href='/sign-in'>Log in</Link>
+          <Link prefetch href='/sign-in'>
+            Log in
+          </Link>
         </Button>
         <Button
           asChild

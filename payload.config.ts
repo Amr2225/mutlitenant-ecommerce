@@ -8,6 +8,7 @@ import sharp from "sharp";
 import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
 import { Categories } from "./collections/Categories";
+import { resendAdapter } from "@payloadcms/email-resend"
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -30,4 +31,9 @@ export default buildConfig({
   }),
   sharp,
   plugins: [],
+  email: resendAdapter({
+    apiKey: process.env.RESEND_API_KEY!,
+    defaultFromAddress: "onboarding@resend.dev",
+    defaultFromName: "FunRoad"
+  })
 });

@@ -6,9 +6,9 @@ import { AUTH_COOKIE } from "../constants";
 import { loginSchema, registerSchema } from "../schemas";
 
 export const authRouter = createTRPCRouter({
-    session: baseProcedure.query(async ({ ctx }) => {
+    session: baseProcedure.query(async ({ ctx: { db } }) => {
         const headers = await getHeaders();
-        const session = await ctx.db.auth({ headers })
+        const session = await db.auth({ headers })
 
         return session
     }),

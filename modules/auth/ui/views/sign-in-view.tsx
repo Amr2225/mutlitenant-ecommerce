@@ -15,9 +15,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchemaType, loginSchema } from "@/modules/auth/schemas";
 import { cn } from "@/lib/utils";
 
-import { useTRPC } from "@/trpc/client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { TRPCClientError } from "@trpc/client";
+import { useTRPC } from "@/trpc/client";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,6 +27,7 @@ const poppins = Poppins({
 export const SignInView = () => {
   const [error, setError] = useState<string | null>(null);
 
+  const queryClient = useQueryClient();
   const trpc = useTRPC();
   const router = useRouter();
 
@@ -46,7 +47,8 @@ export const SignInView = () => {
 
     setError(null);
     login.mutate(data, {
-      onSuccess: () => {
+      onSuccess: async () => {
+        await queryClient.invalidateQueries(trpc.auth.session.queryFilter());
         router.push("/");
       },
       onError: (error) => {

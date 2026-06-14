@@ -9,6 +9,7 @@ import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
 import { Categories } from "./collections/Categories";
 import { resendAdapter } from "@payloadcms/email-resend"
+import { AUTH_COOKIE_PREFIX } from "./modules/auth/constants";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -31,6 +32,7 @@ export default buildConfig({
   }),
   sharp,
   plugins: [],
+  cookiePrefix: AUTH_COOKIE_PREFIX,
   email: resendAdapter({
     apiKey: process.env.RESEND_API_KEY!,
     defaultFromAddress: "onboarding@resend.dev",
